@@ -65,3 +65,29 @@ function calcularTriangulo(lado1, lado2, base, altura) {
 }
 
 console.groupEnd("Triángulos");
+
+
+// Calcular el perímetro y área de un círculo
+
+console.group("Círculos");
+
+const radioCirculo = 3;
+const diametroCirculo = radioCirculo * 2;
+const PI = Math.PI.toFixed(3);
+
+const perimetroCirculo = 2 * radioCirculo * PI;
+const areaCirculo = (radioCirculo ** 2) * PI;
+
+console.log({
+    perimetroCirculo,
+    areaCirculo,
+})
+
+function calcularCirculo(radio) {
+    return {
+        perimetro: radio * 2 * PI,
+        area: Math.pow(radio, 2) * PI,
+    }
+}
+
+console.groupEnd("Círculos");
