@@ -28,7 +28,6 @@ function calcularCuadrado(lado) {
 
 console.groupEnd("Cuadrados");
 
-
 // Calcular el perímetro y área de un triángulo
 
 console.group("Triángulos");
@@ -64,8 +63,23 @@ function calcularTriangulo(lado1, lado2, base, altura) {
 	};
 }
 
-console.groupEnd("Triángulos");
+function calcualrAlturaTrianguloIsoceles(lado1, base) {
+	if (lado1 == base) {
+		console.warn("El triángulo no es isóceles");
+	} else {
+		return Math.sqrt((lado1 ** 2) - ((base ** 2) / 4));
+	}
+}
 
+function calcualrAlturaTrianguloEscaleno(ladoA, ladoC, base) {
+	if (ladoA == ladoC || ladoA == base || ladoC == base) {
+		console.warn("El triángulo no es escaleno");
+	} else {
+		return Math.sqrt((ladoA ** 2) - (((ladoA**2 + base**2 - ladoC**2)/2*base)**2));
+	}
+}
+
+console.groupEnd("Triángulos");
 
 // Calcular el perímetro y área de un círculo
 
@@ -76,18 +90,18 @@ const diametroCirculo = radioCirculo * 2;
 const PI = Math.PI.toFixed(3);
 
 const perimetroCirculo = 2 * radioCirculo * PI;
-const areaCirculo = (radioCirculo ** 2) * PI;
+const areaCirculo = radioCirculo ** 2 * PI;
 
 console.log({
-    perimetroCirculo,
-    areaCirculo,
-})
+	perimetroCirculo,
+	areaCirculo,
+});
 
 function calcularCirculo(radio) {
-    return {
-        perimetro: radio * 2 * PI,
-        area: Math.pow(radio, 2) * PI,
-    }
+	return {
+		perimetro: radio * 2 * PI,
+		area: Math.pow(radio, 2) * PI,
+	};
 }
 
 console.groupEnd("Círculos");
