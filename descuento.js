@@ -11,6 +11,21 @@ function calcularPrecioConDescuento() {
     let descuentoIngresado = descuento.value;
     descuentoIngresado = parseInt(descuentoIngresado);
     
+    console.log({
+        precioIngresado,
+        descuentoIngresado
+    });
+
+    if (!precioIngresado || !descuentoIngresado) {
+        // nuevoPrecio.innerText = 'Ingrese un valor válido';
+        return;
+    }
+
+    if (descuentoIngresado < 0 || descuentoIngresado > 100) {
+        nuevoPrecio.innerText = 'Ingrese un descuento válido';
+        return;
+    }
+
     let precioConDescuento = (precioIngresado * (100 - descuentoIngresado)) / 100;
 
     nuevoPrecio.innerText = `$${precioConDescuento}`;
