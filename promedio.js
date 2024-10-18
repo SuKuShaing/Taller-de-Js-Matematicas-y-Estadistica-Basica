@@ -2,8 +2,10 @@ const input = document.getElementsByTagName("input");
 const button = document.getElementsByTagName("button");
 const listaDeNumeros = document.getElementsByTagName("p");
 const resultadoPromedio = document.getElementsByTagName("span");
-const resultadoMediana = document.getElementById("resultado-Mediana");
 const listaOrdenadaMediana = document.getElementById("lista-ordenada-mediana");
+const resultadoMediana = document.getElementById("resultado-Mediana");
+const listaOrdenadaModa = document.getElementById("lista-ordenada-moda");
+const resultadoModa = document.getElementById("resultado-moda");
 
 let listaDeNumerosIngresados = [];
 
@@ -14,6 +16,7 @@ button[0].addEventListener("click", () => {
 	renderizarLista();
 	promediar();
 	calcularMediana(listaDeNumerosIngresados);
+    calcularModa(listaDeNumerosIngresados);
 });
 
 function renderizarLista() {
@@ -24,10 +27,7 @@ function renderizarLista() {
 }
 
 function promediar() {
-	const suma = listaDeNumerosIngresados.reduce(
-		(acc, numero) => acc + numero,
-		0
-	);
+	const suma = listaDeNumerosIngresados.reduce((acc, numero) => acc + numero, 0);
 	const promedio = suma / listaDeNumerosIngresados.length;
 	resultadoPromedio[0].innerHTML = promedio.toFixed(2);
 }
@@ -76,4 +76,64 @@ function calcularMediana(lista) {
 		}
 	}
 	resultadoMediana.innerHTML = mediana.toFixed(2);
+}
+
+function calcularModa(lista) {
+    // ordenamos la lista 
+    lista.sort((a, b) => a - b);
+
+    const almacenDeFrecuencia = {};
+
+    // Contamos cuantas veces aparece cada número
+    for (let i = 0; i < lista.length; i++) {
+        const numero = lista[i]
+        if (numero in almacenDeFrecuencia) {
+            almacenDeFrecuencia[numero]++
+        } else {
+            almacenDeFrecuencia[numero] = 1
+        }
+    }
+
+    // verificamos cual es la moda
+    let moda = null;
+    let frecuenciaMaxima = 0;
+    for (const key in almacenDeFrecuencia) {
+        if (almacenDeFrecuencia[key] > frecuenciaMaxima) {
+            frecuenciaMaxima = almacenDeFrecuencia[key]
+            moda = key
+        }
+    }
+
+    // Verificamos sí hay más de una moda
+    let losModas = []
+    for (const key in almacenDeFrecuencia) {
+        if (almacenDeFrecuencia[key] == frecuenciaMaxima) {
+            losModas.push(key)
+        }
+    }
+
+    // Imprimimos la moda
+    resultadoModa.innerHTML = ''
+    if (losModas.length > 1) {
+        losModas.forEach(numero => {
+            resultadoModa.innerHTML += `${numero}, `
+        })
+        // Remover la última coma y espacio
+        resultadoModa.innerHTML = resultadoModa.innerHTML.slice(0, -2);
+    } else {
+        resultadoModa.innerHTML += `${losModas[0]}`
+    }
+
+    // Imprimimos la lista
+    listaOrdenadaModa.innerHTML = ''
+    lista.forEach(numero => {
+        if (losModas.includes(numero.toString())) {
+            listaOrdenadaModa.innerHTML += `<strong>${numero}</strong>, `
+        } else {
+            listaOrdenadaModa.innerHTML += `${numero}, `
+        }
+    })
+
+    // Remover la última coma y espacio
+    listaOrdenadaModa.innerHTML = listaOrdenadaModa.innerHTML.slice(0, -2);
 }
