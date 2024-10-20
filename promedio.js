@@ -17,6 +17,7 @@ button[0].addEventListener("click", () => {
 	promediar();
 	calcularMediana(listaDeNumerosIngresados);
     calcularModa(listaDeNumerosIngresados);
+    calcularPromedioPonderado(notas);
 });
 
 function renderizarLista() {
@@ -87,7 +88,7 @@ function calcularModa(lista) {
     // Contamos cuantas veces aparece cada número
     for (let i = 0; i < lista.length; i++) {
         const numero = lista[i]
-        if (numero in almacenDeFrecuencia) {
+        if (almacenDeFrecuencia[numero]) {
             almacenDeFrecuencia[numero]++
         } else {
             almacenDeFrecuencia[numero] = 1
@@ -136,4 +137,33 @@ function calcularModa(lista) {
 
     // Remover la última coma y espacio
     listaOrdenadaModa.innerHTML = listaOrdenadaModa.innerHTML.slice(0, -2);
+}
+
+const notas = [
+    {
+        course: "Educación Física",
+        note: 10,
+        credit: 2,
+    },
+    {
+        course: "Programación",
+        note: 8,
+        credit: 5,
+    },
+    {
+        course: "Finanzas personales",
+        note: 7,
+        credit: 5,
+    },
+];
+
+function calcularPromedioPonderado(notas) {
+    // suma de créditos
+    const creditosTotales = notas.reduce((acc, va) => acc + va.credit, 0);
+
+    // suma de los pesos ponderados
+    const pesosPonderados = notas.reduce((acc, va) => acc + (va.note * va.credit), 0)
+
+    // Promedio Ponderado
+    console.log(`El Promedio Ponderado es: ${pesosPonderados/creditosTotales}`)
 }
