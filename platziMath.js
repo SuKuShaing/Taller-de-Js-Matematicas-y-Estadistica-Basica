@@ -50,30 +50,10 @@ PlatziMath.calcularMediana = function calcularMediana(lista) {
 		const elemento2 = lista[mitadLista];
 		const numCentrales = [elemento1, elemento2];
 
-		mediana = mediaAritmetica(numCentrales);
-
-		// Imprimir en pantalla la lista ordenada
-		listaOrdenadaMediana.innerHTML = "";
-		for (let i = 0; i < lista.length; i++) {
-			if (i === mitadLista || i === mitadLista - 1) {
-				listaOrdenadaMediana.innerHTML += `<strong>${lista[i]}</strong> ,`;
-			} else {
-				listaOrdenadaMediana.innerHTML += `${lista[i]} ,`;
-			}
-		}
+		mediana = PlatziMath.mediaAritmetica(numCentrales);
 	} else {
 		const mitadLista = Math.floor(lista.length / 2);
 		mediana = lista[mitadLista];
-
-		// Imprimir en pantalla la lista ordenada
-		listaOrdenadaMediana.innerHTML = "";
-		for (let i = 0; i < lista.length; i++) {
-			if (i === mitadLista) {
-				listaOrdenadaMediana.innerHTML += `<strong>${lista[i]}</strong> ,`;
-			} else {
-				listaOrdenadaMediana.innerHTML += `${lista[i]} ,`;
-			}
-		}
 	}
     return mediana
 }
