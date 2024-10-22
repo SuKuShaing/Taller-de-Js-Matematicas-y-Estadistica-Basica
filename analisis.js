@@ -45,3 +45,45 @@ function proyeccionPorPersona(nombrePersona) {
 
 	return proyeccionSalario;
 }
+// Estructura datos de salarios.js
+/* [{}, {
+	name: "Juanita",
+	trabajos: [
+		{ year: 2018, empresa: "Freelance", salario: 250 },
+		{ year: 2019, empresa: "Freelance", salario: 250 },
+		{ year: 2020, empresa: "Industrias Mokepon", salario: 850 },
+		{ year: 2021, empresa: "Industrias Mokepon", salario: 1050 },
+		{ year: 2022, empresa: "Industrias Mokepon", salario: 1250 },
+		{ year: 2023, empresa: "Industrias Mokepon", salario: 1250 },
+	],
+}, {}];
+*/
+
+// Análisis empresarial
+/* {
+    Industrias Mokepon: {
+        2018: [salario, salario, salario]
+        2019: [salario, salario, salario]
+        2020: [salario, salario, salario]
+        2021: [salario, salario, salario]
+    }
+} */
+
+// salarios.map -> devuelve un arreglo
+// salarios.forEach -> no devuelve un arreglo
+const compania = {};
+for (persona of salarios) {
+    for (job of persona.trabajos) {
+        if (!compania[job.empresa]) {
+            compania[job.empresa] = {};
+        }
+
+        if (!compania[job.empresa][job.year]) {
+            compania[job.empresa][job.year] = [];
+        }
+
+        compania[job.empresa][job.year].push(job.salario)
+    }
+}
+
+console.log(compania);
