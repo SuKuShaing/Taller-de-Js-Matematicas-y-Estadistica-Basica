@@ -153,3 +153,8 @@ PlatziMath.calcularPromedioPonderado = function calcularPromedioPonderado(notas)
 	console.log(`El Promedio Ponderado es: ${pesosPonderados / creditosTotales}`);
     return promedioPonderado;
 }
+
+PlatziMath.ordenarLista = function ordenarLista(lista) {
+	// Ordenar la lista
+	return lista.sort((a, b) => a - b);
+}

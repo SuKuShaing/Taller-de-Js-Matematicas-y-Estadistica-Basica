@@ -141,3 +141,50 @@ function proyeccionPorEmpresa(nombreEmpresa) {
 		return proyeccionSueldos;
 	}
 }
+
+/* 
+{
+	name: "Juanita",
+	trabajos: [
+		{ year: 2018, empresa: "Freelance", salario: 250 },
+		{ year: 2019, empresa: "Freelance", salario: 250 },
+		{ year: 2020, empresa: "Industrias Mokepon", salario: 850 },
+		{ year: 2021, empresa: "Industrias Mokepon", salario: 1050 },
+		{ year: 2022, empresa: "Industrias Mokepon", salario: 1250 },
+		{ year: 2023, empresa: "Industrias Mokepon", salario: 1250 },
+	],
+};
+*/
+
+// Análisis General
+function medianaGeneral() {
+	// const nombres = salarios.map(persona => persona.name); // devuelve un array con los nombres de las personas
+	// const medianaPorCadaNombre = nombres.map(nombre => medianaPorPersona(nombre));
+	const listaMedianas = salarios.map( // combinamos las dos lineas anteriores en una sola
+		persona => medianaPorPersona(persona.name)
+	);
+	
+	const mediana = PlatziMath.calcularMediana(listaMedianas)
+
+	console.log({listaMedianas, mediana})
+}
+
+function medianaTop10() {
+	const listaMedianas = salarios.map(
+		persona => medianaPorPersona(persona.name)
+	);
+
+	const medianasOrdernadas = PlatziMath.ordenarLista(listaMedianas)
+
+	const cantidadElementosTop10 = medianasOrdernadas.length * 0.1
+
+	const elementoLimite = medianasOrdernadas.length - parseInt(cantidadElementosTop10)
+
+	// slice // extrae una sección de un array y la devuelve como un nuevo array, sin modificar el array original. 
+	// splice // se utiliza para cambiar el contenido de un array eliminando, reemplazando o agregando nuevos elementos. A diferencia de slice, splice modifica el array original.
+
+	const elementosTop10 = medianasOrdernadas.slice(elementoLimite, medianasOrdernadas.length) 
+	
+	const medianaTop10 = PlatziMath.calcularMediana(elementosTop10)
+	return medianaTop10
+}
