@@ -37,14 +37,20 @@ function proyeccionPorPersona(nombrePersona) {
 	}
 
 	// Calcular Mediana
-	const medianaProcentajeCrecimiento = PlatziMath.calcularMediana(porcentajesCrecimiento);
+	const medianaProcentajeCrecimiento = PlatziMath.calcularMediana(
+		porcentajesCrecimiento
+	);
 
+	// Proyección del último sueldo, mediana de porcentajes * el último sueldo
 	const ultimoSalario = trabajos[trabajos.length - 1].salario;
 	const proyeccionSalario =
 		ultimoSalario + ultimoSalario * medianaProcentajeCrecimiento;
 
 	return proyeccionSalario;
 }
+
+// Vamos a cambiar la estructura de datos para poder hacer análisis por persona
+
 // Estructura datos de salarios.js
 /* [{}, {
 	name: "Juanita",
@@ -73,29 +79,65 @@ function proyeccionPorPersona(nombrePersona) {
 // salarios.forEach -> no devuelve un arreglo
 const compania = {};
 for (persona of salarios) {
-    for (job of persona.trabajos) {
-        if (!compania[job.empresa]) {
-            compania[job.empresa] = {};
-        }
+	for (job of persona.trabajos) {
+		if (!compania[job.empresa]) {
+			compania[job.empresa] = {};
+		}
 
-        if (!compania[job.empresa][job.year]) {
-            compania[job.empresa][job.year] = [];
-        }
+		if (!compania[job.empresa][job.year]) {
+			compania[job.empresa][job.year] = [];
+		}
 
-        compania[job.empresa][job.year].push(job.salario)
-    }
+		compania[job.empresa][job.year].push(job.salario);
+	}
 }
 
 console.log(compania);
 
 function medianaEmpresaYear(nombre, year) {
 	if (!compania[nombre]) {
-		console.warn('La empresa no existe')
+		console.warn("La empresa no existe");
 		return;
 	} else if (!compania[nombre][year]) {
-		console.warn('La empresa no dio salarios ese año')
+		console.warn("La empresa no dio salarios ese año");
 		return;
 	} else {
 		return PlatziMath.calcularMediana(compania[nombre][year]);
+	}
+}
+
+function proyeccionPorEmpresa(nombreEmpresa) {
+	if (!compania[nombreEmpresa]) {
+		console.warn("La empresa no existe");
+		return;
+	} else {
+		const empresaYears = Object.keys(compania[nombreEmpresa]); // ['2018', '2019', '2020']
+		const listaMedianaYears = empresaYears.map((year) => {
+			// devuelve otro arreglo, la mediana de cada año
+			return medianaEmpresaYear(nombreEmpresa, year);
+		});
+		console.log({ listaMedianaYears });
+
+		// Arreglo de incrementos
+		let porcentajesCrecimiento = [];
+		for (let i = 1; i < listaMedianaYears.length; i++) {
+			const salarioActual = listaMedianaYears[i];
+			const salarioPasado = listaMedianaYears[i - 1];
+			const crecimiento = salarioActual - salarioPasado;
+			const porcentajeDeCrecimiento = crecimiento / salarioPasado;
+			porcentajesCrecimiento.push(porcentajeDeCrecimiento);
+		}
+
+		// Calcular Mediana
+		const medianaProcentajeCrecimiento = PlatziMath.calcularMediana(
+			porcentajesCrecimiento
+		);
+
+		// Proyección del último sueldo, mediana de porcentajes * el último sueldo
+		const ultimoMediana = listaMedianaYears[listaMedianaYears.length - 1];
+		const proyeccionSueldos =
+			ultimoMediana + ultimoMediana * medianaProcentajeCrecimiento;
+
+		return proyeccionSueldos;
 	}
 }
