@@ -188,3 +188,5 @@ function medianaTop10() {
 	const medianaTop10 = PlatziMath.calcularMediana(elementosTop10)
 	return medianaTop10
 }
+
+// Se finaliza el curso
